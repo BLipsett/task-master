@@ -11,6 +11,10 @@ class CardsService {
     ProxyState.cards = [...ProxyState.cards, new Card(todoItem)];
     console.log(ProxyState.cards);
   }
+
+  removeCard(cardId) {
+    ProxyState.cards = ProxyState.cards.filter((c) => c.id != cardId);
+  }
 }
 
 export const cardsService = new CardsService();

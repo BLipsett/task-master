@@ -15,4 +15,12 @@ export class TasksController {
 
     tasksService.addTask(newTask);
   }
+
+  removeTask(event, task) {
+    console.log(task);
+    event.preventDefault();
+    window.confirm("Do you want to remove?");
+
+    tasksService.removeTask(task);
+  }
 }

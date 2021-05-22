@@ -8,6 +8,11 @@ class TasksService {
     ProxyState.tasks = [...ProxyState.tasks, new Task(newTask)];
     console.log(ProxyState.tasks);
   }
+
+  removeTask(task) {
+    ProxyState.tasks = ProxyState.tasks.filter((t) => t.id != task);
+    console.log(ProxyState.tasks);
+  }
 }
 
 export const tasksService = new TasksService();
