@@ -1,6 +1,5 @@
 import { ProxyState } from "../AppState.js";
 import { cardsService } from "../Services/CardsService.js";
-import { tasksService } from "../Services/TasksService.js";
 
 function _drawCard() {
   console.log("start draw");
@@ -9,30 +8,31 @@ function _drawCard() {
   let card = ProxyState.cards;
 
   card.forEach((card) => {
-    let tasks = ProxyState.tasks;
     console.log("hopefullly", card);
-    tasks.forEach((t) => {
-      template += `
+    let tasks = ProxyState.tasks.filter((t) => t.card == card.id);
+    template += `
           <div class="col-lg-3">
           <div class="card">
           <div class="card-body">
           <div class="card-header">
           <h4 class="card-title">${card.title}</h4>
           <p>${card.taskCount}
+          </div>`;
+
+    tasks.forEach((t) => t);
+
+    template += `
+          <p></p>
           </div>
-          <p>${t.name}<p>
           </div>
-          </div>
-          <form onsubmit="app.cardsController.addTask()">
+          <form onsubmit="app.tasksController.addTask(event, '${card.id}')">
           <label for="add-task"></label>
           <input placeholder="new task" name="task" id="" type="text" />
           <button class="btn btn-success">add</button
-        </form>
+          </form>
           </div>
           `;
-    });
   });
-
   document.getElementById("card-section").innerHTML = template;
 }
 
@@ -53,9 +53,5 @@ export class CardsController {
     };
     cardsService.addTodo(todoItem);
     ProxyState.on("cards", _drawCard);
-  }
-
-  addTask() {
-    console.log("add a task");
   }
 }
