@@ -1,3 +1,4 @@
+import { ProxyState } from "../AppState.js";
 import { tasksService } from "../Services/TasksService.js";
 
 export class TasksController {
@@ -5,9 +6,8 @@ export class TasksController {
 
   addTask(event, card) {
     event.preventDefault();
-
+    console.log(card);
     let form = event.target;
-
     let newTask = {
       name: form.task.value,
       card: card,
