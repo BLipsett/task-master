@@ -37,10 +37,10 @@
       <div id="app"></div>
       <div class="container">
         <div class="row">
-          <div class="col-4">
+          <div class="col-lg-6">
             <form onsubmit="app.cardsController.addTodo(event)">
-              <label for="add-card">
-                <input type="text" name="todo" id="todo" />
+              <label for="todo">
+                <input type="text" name="todo" id="todo"  required/>
                 <button>create a to-do item</button>
                 <input type="color" id="cardColor">
               </label>

@@ -6,7 +6,6 @@ class TasksService {
 
   addTask(newTask) {
     ProxyState.tasks = [...ProxyState.tasks, new Task(newTask)];
-    console.log(ProxyState.tasks);
   }
 
   removeTask(task) {
@@ -27,6 +26,23 @@ class TasksService {
     found.isComplete = false;
     ProxyState.tasks = ProxyState.tasks;
     console.log("please be false", ProxyState.tasks);
+  }
+
+  checkBox(taskId) {
+    let found = ProxyState.tasks.find((t) => t.id == taskId);
+
+    found.isComplete = true;
+    found.taskTotal++;
+    //ProxyState.tasks = ProxyState.tasks;
+    console.log(ProxyState.tasks);
+  }
+
+  unCheckBox(taskId) {
+    let found = ProxyState.tasks.find((t) => t.id == taskId);
+    found.isComplete = false;
+    found.taskTotal--;
+    //ProxyState.tasks = ProxyState.tasks;
+    console.log("set to false", ProxyState.tasks);
   }
 }
 

@@ -24,55 +24,60 @@ function _drawCard() {
       let amount = tasks.length;
 
       //console.log("num of tasks is", t);
+      // click func to set state // onclick="app.tasksController.setCheck(event, '${t.id}')"
 
       template += /*html*/ `
-                  <p> of ${amount}<p>
-                  </div>
-                    <div id="checkMe">      
-              <label for="exampleCheck1">
-                    <input type="checkbox" class="taskComplete" id="taskComplete" onclick="app.tasksController.setCheck(event, '${t.id}')"/>
-                    </label>
-                  
-                    <ul>
-                    <li>
-                    <p>${t.name}<p>
-                    <button id="delete-task" onclick="app.tasksController.removeTask(event, '${t.id}')" class="fas fa-trash"></button>
-                    </li>
-                    </ul>
-                    </div>
-                    `;
+      <p> ${t.taskTotal} of ${amount}<p>
+      </div>
+      <div id="checkMe">    
+      <form>  
+      <label for="taskComplete">
+      <input type="checkbox" name="taskComplete" id='${t.id}' onclick="app.tasksController.checkBox('${t.id}')"/>
+      </label>
+      </form>
+      <ul>
+      <li>
+      <p>${t.name}<p>
+      <button id="delete-task" onclick="app.tasksController.removeTask(event, '${t.id}')" class="fas fa-trash"></button>
+      </li>
+      </ul>
+      </div>
+      `;
     });
     template += /*html*/ `
-                  </div>
-                  
-                  <form onsubmit="app.tasksController.addTask(event,'${card.id}')">
-                  <label for="add-task"></label>
-                  <input placeholder="new task" class="form-control" name="task" type="text" />
-                  <button class="btn btn-success">add</button>
-                  </form>
-                  </div>
-       </div>
-        </div>
-          `;
+    </div>
+    
+    <form onsubmit="app.tasksController.addTask(event,'${card.id}')">
+    <label for="add-task"></label>
+    <input placeholder="new task" class="form-control" name="task" type="text" id="addTask" required/>
+    <button class="btn btn-success">add</button>
+    </form>
+    </div>
+    </div>
+    </div>
+    `;
   });
   document.getElementById("card-section").innerHTML = template;
-  _drawCheckBox();
 }
 
-function _drawCheckBox() {
-  ProxyState.tasks.forEach((t) => {
-    if (t.isComplete == true) {
-      console.log("closer");
-      let dumbThing = (document.getElementById("checkMe").innerHTML = /*html*/ `
-      <label for="exampleCheck1">So Done
-      <input type="checkbox" class="taskComplete" id="taskComplete" onclick="app.tasksController.unCheck(event, '${t.id}')" checked/>
-      </label>
-      `);
-    } else {
-      _drawCard;
-    }
-  });
-}
+// function _drawCheckBox() {
+//   console.log("draw box");
+//   ProxyState.cards.forEach((card) => {
+//     let tasks = ProxyState.tasks.filter((t) => t.card == card.id);
+//     tasks.forEach((t) => {
+//       if (t.isComplete == true) {
+//         console.log("closer", t.id);
+//         let dumbThing = (document.getElementById(
+//           "taskComplete"
+//         ).innerHTML = /*html*/ `
+//         <label for="truthy-checkbox">So Done
+//         <input checked type="checkbox" class="taskComplete" id="truthyCheckbox" onclick="app.tasksController.unCheck(event, '${t.id}')" checked/>
+//         </label>
+//         `);
+//       }
+//     });
+//   });
+// }
 
 export class CardsController {
   constructor() {
@@ -87,16 +92,24 @@ export class CardsController {
   addTodo(event) {
     event.preventDefault();
     let form = event.target;
+
+    let title = form.todo.value;
+    console.log(title);
     let todoItem = {
       title: form.todo.value,
       cardColor: form.cardColor.value,
     };
-    cardsService.addTodo(todoItem);
+
+    title.length > 3 && title.length < 15
+      ? cardsService.addTodo(todoItem)
+      : alert("title must be more than 3 and less than 15 characters");
     ProxyState.on("cards", _drawCard);
   }
 
   removeCard(event, cardId) {
     event.preventDefault();
-    cardsService.removeCard(cardId);
+    if (window.confirm("Do you want to remove?")) {
+      cardsService.removeCard(cardId);
+    }
   }
 }
