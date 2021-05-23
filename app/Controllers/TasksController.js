@@ -23,4 +23,22 @@ export class TasksController {
 
     tasksService.removeTask(task);
   }
+
+  setCheck(event, taskId) {
+    event.preventDefault();
+    let checkBox = document.getElementById("checkMe");
+    if (checkBox.checked) {
+      console.log(checkBox.value);
+    } else {
+      console.log("uncheck");
+    }
+    tasksService.setCheck(taskId);
+  }
+
+  unCheck(event, taskId) {
+    event.preventDefault();
+    let checkBox = document.getElementById("checkMe");
+
+    tasksService.unCheck(taskId);
+  }
 }

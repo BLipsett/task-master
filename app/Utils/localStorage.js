@@ -10,7 +10,7 @@ export function saveState() {
       tasks: ProxyState.tasks,
     })
   );
-  console.log(ProxyState);
+  //console.log(ProxyState);
 }
 
 export function loadState() {

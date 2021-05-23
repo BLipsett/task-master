@@ -1,5 +1,6 @@
 import { ProxyState } from "../AppState.js";
 import { cardsService } from "../Services/CardsService.js";
+import { tasksService } from "../Services/TasksService.js";
 import { loadState } from "../Utils/localStorage.js";
 
 function _drawCard() {
@@ -15,16 +16,23 @@ function _drawCard() {
               <div class="card-body">
                     <button id="delete-task" onclick="app.cardsController.removeCard(event, '${card.id}')" class="fas fa-trash"></button>
 
-                <div class="card-header">
+                <div class="card-header" style="background-color: ${card.cardColor}">
                   <h4 class="card-title">${card.title}</h4>
-                  <p>${card.taskCount}<p>
-                  </div>
                   `;
 
     tasks.forEach((t) => {
-      console.log(t);
+      let amount = tasks.length;
+
+      //console.log("num of tasks is", t);
+
       template += /*html*/ `
-                    <div>
+                  <p> of ${amount}<p>
+                  </div>
+                    <div id="checkMe">      
+              <label for="exampleCheck1">
+                    <input type="checkbox" class="taskComplete" id="taskComplete" onclick="app.tasksController.setCheck(event, '${t.id}')"/>
+                    </label>
+                  
                     <ul>
                     <li>
                     <p>${t.name}<p>
@@ -48,6 +56,22 @@ function _drawCard() {
           `;
   });
   document.getElementById("card-section").innerHTML = template;
+  _drawCheckBox();
+}
+
+function _drawCheckBox() {
+  ProxyState.tasks.forEach((t) => {
+    if (t.isComplete == true) {
+      console.log("closer");
+      let dumbThing = (document.getElementById("checkMe").innerHTML = /*html*/ `
+      <label for="exampleCheck1">So Done
+      <input type="checkbox" class="taskComplete" id="taskComplete" onclick="app.tasksController.unCheck(event, '${t.id}')" checked/>
+      </label>
+      `);
+    } else {
+      _drawCard;
+    }
+  });
 }
 
 export class CardsController {
@@ -65,6 +89,7 @@ export class CardsController {
     let form = event.target;
     let todoItem = {
       title: form.todo.value,
+      cardColor: form.cardColor.value,
     };
     cardsService.addTodo(todoItem);
     ProxyState.on("cards", _drawCard);
