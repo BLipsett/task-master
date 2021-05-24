@@ -56,57 +56,6 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3">
-        <div class="card p-2 my-3">
-          <div class="card-body">
-            <button
-              id="delete-task"
-              onclick="app.cardsController.removeCard(event, '${card.id}')"
-              class="fas fa-trash"
-            ></button>
-            <div class="card-header">
-              <h4 class="card-title">${card.title}</h4>
-              <p>task amount</p>
-              <p></p>
-            </div>
-
-            <div id="checkMe">
-              <form>
-                <label for="taskComplete">
-                  <input
-                    type="checkbox"
-                    name="taskComplete"
-                    id="${t.id}"
-                    onclick="app.tasksController.checkBox('${t.id}')"
-                  />
-                </label>
-              </form>
-              <div>
-                <p>${t.name}</p>
-                <p>
-                  <button
-                    id="delete-task"
-                    onclick="app.tasksController.removeTask(event, '${t.id}')"
-                    class="fas fa-trash"
-                  ></button>
-                </p>
-              </div>
-            </div>
-            <form onsubmit="app.tasksController.addTask(event,'${card.id}')">
-              <label for="add-task"></label>
-              <input
-                placeholder="new task"
-                class="form-control"
-                name="task"
-                type="text"
-                id="addTask"
-                required
-              />
-              <button class="btn btn-success">add</button>
-            </form>
-          </div>
-        </div>
-      </div>
     </main>
     <footer class="container-fluid bg-dark text-light">
       <div class="row text-center">
