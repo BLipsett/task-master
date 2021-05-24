@@ -14,9 +14,8 @@ function _drawCard() {
           <div class="col-lg-3">
             <div class="card p-2 my-3">
               <div class="card-body">
-                    <button id="delete-task" onclick="app.cardsController.removeCard(event, '${card.id}')" class="fas fa-trash"></button>
-
                 <div class="card-header" style="background-color: ${card.cardColor}">
+                  <button id="delete-task" onclick="app.cardsController.removeCard(event, '${card.id}')" class="fas fa-trash"></button>
                   <h4 class="card-title">${card.title}</h4>
                   `;
 
@@ -27,35 +26,34 @@ function _drawCard() {
       // click func to set state // onclick="app.tasksController.setCheck(event, '${t.id}')"
 
       template += /*html*/ `
-      <p> ${t.taskTotal} of ${amount}<p>
-      </div>
-      <div id="checkMe">    
-      <form>  
-      <label for="taskComplete">
-      <input type="checkbox" name="taskComplete" id='${t.id}' onclick="app.tasksController.checkBox('${t.id}')"/>
-      </label>
-      </form>
-      <ul>
-      <li>
-      <p>${t.name}<p>
-      <button id="delete-task" onclick="app.tasksController.removeTask(event, '${t.id}')" class="fas fa-trash"></button>
-      </li>
-      </ul>
-      </div>
-      `;
+                  <p> ${t.taskTotal} of ${amount}<p>
+                </div>
+                <div id="checkMe" class="d-flex m-2" style="border-bottom: 2px solid black">    
+                  <form>  
+                    <label for="taskComplete">
+                      <input type="checkbox" name="taskComplete" id='${t.id}' onclick="app.tasksController.checkBox('${t.id}')"/>
+                    </label>
+                  </form>
+                  <div>
+                    <p>${t.name}</p>
+                  </div>
+                  <div class="ml-auto" >
+                    <button id="delete-task" onclick="app.tasksController.removeTask(event, '${t.id}')" class="fas fa-trash"></button>
+                  </div>
+                    `;
     });
     template += /*html*/ `
-    </div>
-    
-    <form onsubmit="app.tasksController.addTask(event,'${card.id}')">
-    <label for="add-task"></label>
-    <input placeholder="new task" class="form-control" name="task" type="text" id="addTask" required/>
-    <button class="btn btn-success">add</button>
-    </form>
-    </div>
-    </div>
-    </div>
-    `;
+                </div>
+                <form onsubmit="app.tasksController.addTask(event,'${card.id}')">
+                  <label for="add-task"></label>
+                  <input placeholder="new task" class="form-control" name="task" type="text" id="addTask" required/>
+                  <button class="btn btn-success">add</button>
+                </form>
+              </div>
+            </div>
+          </div>
+                
+                `;
   });
   document.getElementById("card-section").innerHTML = template;
 }
